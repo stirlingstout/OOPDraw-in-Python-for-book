@@ -78,6 +78,10 @@ class OOPDraw(OOPDrawIntermediate):
         b = wx.Point(400, 500)
         dc.SetPen(self.CurrentPen)
         dc.DrawLine(a, b)
+        
+        c = wx.Point(200, 200)
+        dc.DrawLine(b, c)
+        dc.DrawLine(c, a)
 
 
 if __name__ == '__main__':
