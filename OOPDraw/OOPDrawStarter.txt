@@ -45,8 +45,6 @@ class OOPDrawIntermediate(wx.Frame):
         vBox = wx.BoxSizer(wx.VERTICAL)
         panel.Sizer = vBox
 
-        # Code for user controls will go here
-
         # hBox is responsible for sizing the panel for controls and the panel for drawing on (canvas)
         hBox = wx.BoxSizer(wx.HORIZONTAL)
         self.Sizer = hBox
@@ -56,20 +54,16 @@ class OOPDrawIntermediate(wx.Frame):
         hBox.Add(self.Canvas, 1, wx.EXPAND)
 
         self.Canvas.Bind(wx.EVT_PAINT, self.OnPaint)
-       
-        self.Canvas.SetDoubleBuffered(True) 
-        panel.SetDoubleBuffered(True)
-        self.CurrentPen = wx.Pen(wx.GREEN, 4)
-        self.CurrentBrush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
-
+        
 
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
         super().__init__()
 
-        # Code for OOPDraw functionality goes here
+        self.Canvas.SetDoubleBuffered(True) 
+        self.CurrentBrush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
 
-    def OnPaint(self: wx.Frame, e: wx.Event):
+    def OnPaint(self: wx.Frame, evt: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
         dc.Brush = self.CurrentBrush
