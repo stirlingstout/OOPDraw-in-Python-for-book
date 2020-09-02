@@ -61,27 +61,40 @@ class OOPDrawIntermediate(wx.Frame):
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
         super().__init__()
-        self.CurrentBrush = wx.Brush(wx.BLACK,
-                                     style=wx.BRUSHSTYLE_TRANSPARENT)
-        
+        self.CurrentBrush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
         self.Canvas.SetDoubleBuffered(True) 
         self.CurrentPen = wx.Pen(wx.GREEN, 4)   
  
         # Code for OOPDraw functionality goes here
 
+        self.Canvas.Bind(wx.EVT_LEFT_DOWN, self.OnMouseDown)
+        self.Canvas.Bind(wx.EVT_LEFT_UP, self.OnMouseUp)
+        self.Canvas.Bind(wx.EVT_MOTION, self.OnMouseMove)
+
+        self.dragging = False
+        self.startOfDrag = wx.Point()
+        self.lastMousePosition = wx.Point()
+
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
         dc.Brush = self.CurrentBrush
-        
-        a = wx.Point(20, 30)
-        b = wx.Point(400, 500)
-        dc.SetPen(self.CurrentPen)
-        dc.DrawLine(a, b)
-        
-        c = wx.Point(200, 200)
-        dc.DrawLine(b, c)
-        dc.DrawLine(c, a)
+
+        dc.Pen = self.CurrentPen
+        dc.DrawLine(self.startOfDrag, self.lastMousePosition)
+    
+    def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
+        self.dragging = True
+        self.startOfDrag = self.lastMousePosition = e.GetPosition()
+        e.Skip()
+
+    def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
+        self.dragging = False
+
+    def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
+        if self.dragging:
+            self.lastMousePosition = e.GetPosition()
+            self.Refresh()
 
 
 if __name__ == '__main__':

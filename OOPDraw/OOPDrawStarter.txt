@@ -59,9 +59,11 @@ class OOPDrawIntermediate(wx.Frame):
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
         super().__init__()
-
-        self.Canvas.SetDoubleBuffered(True) 
         self.CurrentBrush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
+        self.Canvas.SetDoubleBuffered(True) 
+        self.CurrentPen = wx.Pen(wx.GREEN, 4)   
+ 
+        # Code for OOPDraw functionality goes here
 
     def OnPaint(self: wx.Frame, evt: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
