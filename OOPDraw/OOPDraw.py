@@ -2,6 +2,8 @@ import wx # type: ignore
 
 from typing import List, Callable, Optional
 
+from line import Line
+
 class OOPDrawIntermediate(wx.Frame):
     """ OOPDrawIntermediate is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
     panel on which graphic elements are drawn. It's used as a stepping stone to the ful OOPDraw package """
@@ -63,7 +65,7 @@ class OOPDraw(OOPDrawIntermediate):
         super().__init__()
         self.CurrentBrush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
         self.Canvas.SetDoubleBuffered(True) 
-        self.CurrentPen = wx.Pen(wx.GREEN, 4)   
+        self.CurrentPen = wx.Pen(wx.BLACK)   
  
         # Code for OOPDraw functionality goes here
 
@@ -75,17 +77,21 @@ class OOPDraw(OOPDrawIntermediate):
         self.startOfDrag = wx.Point()
         self.lastMousePosition = wx.Point()
 
+        self.lines = []
+
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
         dc.Brush = self.CurrentBrush
 
         dc.Pen = self.CurrentPen
-        dc.DrawLine(self.startOfDrag, self.lastMousePosition)
+        for line in self.lines:
+            line.Draw(dc)
     
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
         self.startOfDrag = self.lastMousePosition = e.GetPosition()
+        self.lines.append(Line(self.CurrentPen, e.x, e.y)) 
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
@@ -93,6 +99,8 @@ class OOPDraw(OOPDrawIntermediate):
 
     def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
         if self.dragging:
+            currentLine = self.lines[-1]
+            currentLine.GrowTo(e.x, e.y)
             self.lastMousePosition = e.GetPosition()
             self.Refresh()
 

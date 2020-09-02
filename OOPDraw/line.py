@@ -1,7 +1,10 @@
 import wx # type: ignore
 
 class Line(object):
-    """description of class"""
+    """I represent a line in the OOPDraw application, holding
+the (x, y) coordinates of my start and end points, and the pen
+that I am to be drawn in
+"""
 
     def __init__(self, p: wx.Pen, x1: int, y1: int, x2: int=None, y2: int=None):
         self.__Pen = p
