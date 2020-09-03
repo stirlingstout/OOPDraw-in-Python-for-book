@@ -18,8 +18,9 @@ class OOPDrawIntermediate(wx.Frame):
             vBox.Add(hBox)
 
             hBox = wx.BoxSizer(wx.HORIZONTAL)
-            cb = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, style=wx.CB_READONLY, name=name)
-            cb.Bind(wx.EVT_COMBOBOX, handler, cb)
+            cb = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, style=0, name=name)
+            cb.Bind(wx.EVT_TEXT, handler, cb)
+            cb.SetValue(options[0])
 
             hBox.AddSpacer(10)
             hBox.Add(cb)
@@ -47,10 +48,9 @@ class OOPDrawIntermediate(wx.Frame):
         vBox = wx.BoxSizer(wx.VERTICAL)
         panel.Sizer = vBox
 
-        # Code for user controls will go here
-
         # hBox is responsible for sizing the panel for controls and the panel for drawing on (canvas)
         hBox = wx.BoxSizer(wx.HORIZONTAL)
+        p = wx.CENTER
         self.Sizer = hBox
         hBox.Add(panel, 0, wx.EXPAND)
         hBox.AddSpacer(10)
@@ -59,13 +59,18 @@ class OOPDrawIntermediate(wx.Frame):
 
         self.Canvas.Bind(wx.EVT_PAINT, self.OnPaint)
 
+        self.CurrentBrush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
+        self.Canvas.SetDoubleBuffered(True) 
+        self.CurrentPen = wx.Pen(wx.BLACK)   
+
+        # User's code for user controls will go here
+        AddChoice("LineWidth", "Line width:", 0, ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
+        AddChoice("Colour", "Colour:", 30, ["Red", "Green", "Blue"], self.OnColourChanged)
+ 
 
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
         super().__init__()
-        self.CurrentBrush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
-        self.Canvas.SetDoubleBuffered(True) 
-        self.CurrentPen = wx.Pen(wx.BLACK)   
  
         # Code for OOPDraw functionality goes here
 
@@ -104,6 +109,25 @@ class OOPDraw(OOPDrawIntermediate):
             self.lastMousePosition = e.GetPosition()
             self.Refresh()
 
+    def OnLineWidthChanged(self: wx.Frame, e: wx.Event):
+        width = self.CurrentPen.Width
+        if e.String == "Thin":
+            width = 2
+        elif e.String == "Medium":
+            width = 4
+        elif e.String == "Thick":
+            width = 8
+        self.CurrentPen = wx.Pen(self.CurrentPen.Colour, width)
+
+    def OnColourChanged(self: wx.Frame, e: wx.Event):
+        colour = self.CurrentPen.Colour
+        if e.String == "Red":
+            colour = wx.RED
+        elif e.String == "Green":
+            colour = wx.GREEN
+        elif e.String == "Blue":
+            colour = wx.BLUE
+        self.CurrentPen = wx.Pen(colour, self.CurrentPen.Width)
 
 if __name__ == '__main__':
     app = wx.App()
