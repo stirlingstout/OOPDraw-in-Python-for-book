@@ -17,7 +17,7 @@ class OOPDrawIntermediate(wx.Frame):
             vBox.Add(hBox)
 
             hBox = wx.BoxSizer(wx.HORIZONTAL)
-            cb = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, style=0, name=name)
+            cb = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, name=name)
             cb.Bind(wx.EVT_TEXT, handler, cb)
             cb.SetValue(options[0])
 
