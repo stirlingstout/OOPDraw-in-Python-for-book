@@ -83,7 +83,9 @@ class OOPDraw(OOPDrawIntermediate):
         self.startOfDrag = wx.Point()
         self.lastMousePosition = wx.Point()
 
-        self.lines = []
+        self.shapes = []
+
+        self.shapes.append(Rectangle(self.CurrentPen, 100, 100, 300, 200))
 
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
@@ -91,16 +93,13 @@ class OOPDraw(OOPDrawIntermediate):
         dc.Brush = self.CurrentBrush
 
         dc.Pen = self.CurrentPen
-        for line in self.lines:
-            line.Draw(dc)
-
-        rect = Rectangle(self.CurrentPen, 100, 200, 300, 500)
-        rect.Draw(dc) 
+        for shape in self.shapes:
+            shape.Draw(dc)
 
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
         self.startOfDrag = self.lastMousePosition = e.GetPosition()
-        self.lines.append(Line(self.CurrentPen, e.x, e.y)) 
+        self.shapes.append(Line(self.CurrentPen, e.x, e.y)) 
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
@@ -108,7 +107,7 @@ class OOPDraw(OOPDrawIntermediate):
 
     def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
         if self.dragging:
-            currentLine = self.lines[-1]
+            currentLine = self.shapes[-1]
             currentLine.GrowTo(e.x, e.y)
             self.lastMousePosition = e.GetPosition()
             self.Refresh()
