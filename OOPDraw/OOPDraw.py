@@ -67,7 +67,7 @@ class OOPDrawIntermediate(wx.Frame):
         # User's code for user controls will go here
         AddChoice("LineWidth", "Line width:", 0, ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
         AddChoice("Colour", "Colour:", 30, ["Red", "Green", "Blue"], self.OnColourChanged)
- 
+        AddChoice("Shape", "Shape:", 60, ["Line", "Rectangle"], None)
 
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
@@ -85,8 +85,6 @@ class OOPDraw(OOPDrawIntermediate):
 
         self.shapes = []
 
-        self.shapes.append(Rectangle(self.CurrentPen, 100, 100, 300, 200))
-
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
@@ -99,7 +97,10 @@ class OOPDraw(OOPDrawIntermediate):
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
         self.startOfDrag = self.lastMousePosition = e.GetPosition()
-        self.shapes.append(Line(self.CurrentPen, e.x, e.y)) 
+        if self.FindWindow("Shape").Value == "Line":
+            self.shapes.append(Line(self.CurrentPen, e.x, e.y));
+        elif self.FindWindow("Shape").Value == "Rectangle":
+            self.shapes.append(Rectangle(self.CurrentPen, e.x, e.y))
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
