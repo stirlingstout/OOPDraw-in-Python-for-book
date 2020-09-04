@@ -3,6 +3,7 @@ import wx # type: ignore
 from typing import List, Callable, Optional
 
 from line import Line
+from rectangle import Rectangle
 
 class OOPDrawIntermediate(wx.Frame):
     """ OOPDrawIntermediate is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
@@ -18,7 +19,7 @@ class OOPDrawIntermediate(wx.Frame):
             vBox.Add(hBox)
 
             hBox = wx.BoxSizer(wx.HORIZONTAL)
-            cb = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, name=name)
+            cb = wx.ComboBox(panel, wx.ID_ANY, "", choices=options, name=name)
             cb.Bind(wx.EVT_TEXT, handler, cb)
             cb.SetValue(options[0])
 
@@ -92,7 +93,10 @@ class OOPDraw(OOPDrawIntermediate):
         dc.Pen = self.CurrentPen
         for line in self.lines:
             line.Draw(dc)
-    
+
+        rect = Rectangle(self.CurrentPen, 100, 200, 300, 500)
+        rect.Draw(dc) 
+
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
         self.startOfDrag = self.lastMousePosition = e.GetPosition()
