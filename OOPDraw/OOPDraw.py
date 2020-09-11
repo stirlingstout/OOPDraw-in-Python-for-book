@@ -4,6 +4,7 @@ from typing import List, Callable, Optional
 
 from line import Line
 from rectangle import Rectangle
+from shape import Shape
 
 class OOPDrawIntermediate(wx.Frame):
     """ OOPDrawIntermediate is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
@@ -93,6 +94,8 @@ class OOPDraw(OOPDrawIntermediate):
         dc.Pen = self.CurrentPen
         for shape in self.shapes:
             shape.Draw(dc)
+
+        s = Shape()
 
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True

@@ -29,6 +29,9 @@
     <Compile Include="rectangle.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="shape.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="OOPDrawPython3.8\">

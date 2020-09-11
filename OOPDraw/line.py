@@ -1,6 +1,8 @@
 import wx # type: ignore
 
-class Line(object):
+from shape import Shape
+
+class Line(Shape):
     """I represent a line in the OOPDraw application, holding
 the (x, y) coordinates of my start and end points, and the pen
 that I am to be drawn in
