@@ -8,7 +8,7 @@ class OOPDrawIntermediate(wx.Frame):
     panel on which graphic elements are drawn. I'm used as a stepping stone to the full OOPDraw package """
 
     def __init__(self):
-        def AddChoice(name: str, label: str, y: int, options: List[str], handler: Callable):
+        def AddChoice(name: str, label: str, options: List[str], handler: Callable):
             vBox.AddSpacer(10)
 
             hBox = wx.BoxSizer(wx.HORIZONTAL)

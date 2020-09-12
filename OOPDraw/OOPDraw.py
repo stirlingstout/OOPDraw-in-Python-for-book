@@ -4,14 +4,14 @@ from typing import List, Callable, Optional
 
 from line import Line
 from rectangle import Rectangle
-from shape import Shape
+
 
 class OOPDrawIntermediate(wx.Frame):
     """ OOPDrawIntermediate is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
     panel on which graphic elements are drawn. It's used as a stepping stone to the ful OOPDraw package """
 
     def __init__(self):
-        def AddChoice(name: str, label: str, y: int, options: List[str], handler: Callable):
+        def AddChoice(name: str, label: str, options: List[str], handler: Callable):
             vBox.AddSpacer(10)
 
             hBox = wx.BoxSizer(wx.HORIZONTAL)
@@ -52,7 +52,6 @@ class OOPDrawIntermediate(wx.Frame):
 
         # hBox is responsible for sizing the panel for controls and the panel for drawing on (canvas)
         hBox = wx.BoxSizer(wx.HORIZONTAL)
-        p = wx.CENTER
         self.Sizer = hBox
         hBox.Add(panel, 0, wx.EXPAND)
         hBox.AddSpacer(10)
@@ -66,9 +65,9 @@ class OOPDrawIntermediate(wx.Frame):
         self.CurrentPen = wx.Pen(wx.BLACK)   
 
         # User's code for user controls will go here
-        AddChoice("LineWidth", "Line width:", 0, ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
-        AddChoice("Colour", "Colour:", 30, ["Red", "Green", "Blue"], self.OnColourChanged)
-        AddChoice("Shape", "Shape:", 60, ["Line", "Rectangle"], None)
+        AddChoice("LineWidth", "Line width:", ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
+        AddChoice("Colour", "Colour:", ["Red", "Green", "Blue"], self.OnColourChanged)
+        AddChoice("Shape", "Shape:", ["Line", "Rectangle"], None)
 
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
@@ -95,13 +94,11 @@ class OOPDraw(OOPDrawIntermediate):
         for shape in self.shapes:
             shape.Draw(dc)
 
-        s = Shape()
-
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
         self.startOfDrag = self.lastMousePosition = e.GetPosition()
         if self.FindWindow("Shape").Value == "Line":
-            self.shapes.append(Line(self.CurrentPen, e.x, e.y));
+            self.shapes.append(Line(self.CurrentPen, e.x, e.y))
         elif self.FindWindow("Shape").Value == "Rectangle":
             self.shapes.append(Rectangle(self.CurrentPen, e.x, e.y))
         e.Skip()

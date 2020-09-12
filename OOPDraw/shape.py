@@ -11,5 +11,5 @@ class Shape(ABC):
         pass
 
     @abstractmethod
-    def GrowTo(x2: int, y2: int):
+    def GrowTo(self, x2: int, y2: int):
         pass
