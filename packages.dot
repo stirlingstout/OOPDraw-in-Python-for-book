@@ -1,0 +1,14 @@
+digraph "packages" {
+charset="utf-8"
+rankdir=BT
+"0" [label="OOPDraw", shape="box"];
+"1" [label="OOPDraw.OOPDraw", shape="box"];
+"2" [label="OOPDraw.line", shape="box"];
+"3" [label="OOPDraw.rectangle", shape="box"];
+"4" [label="OOPDraw.shape", shape="box"];
+"5" [label="OOPDraw.shapes", shape="box"];
+"1" -> "2" [arrowhead="open", arrowtail="none"];
+"1" -> "3" [arrowhead="open", arrowtail="none"];
+"2" -> "4" [arrowhead="open", arrowtail="none"];
+"3" -> "4" [arrowhead="open", arrowtail="none"];
+}
