@@ -10,11 +10,7 @@ class Circle(Shape):
         self.GrowTo(self.X2(), self.Y2())
 
     def Draw(self, dc: wx.DC):
-        x = min([self.X1(), self.X2()])
-        y = min([self.Y1(), self.Y2()])
-
-        w = max([self.X1(), self.X2()]) - x
-        h = max([self.Y1(), self.Y2()]) - y
+        (x, y, w, h) = self.EnclosingRectangle()
 
         dc.Pen = self.Pen()
         dc.DrawEllipticArc(x, y, w, h, 0, 360)

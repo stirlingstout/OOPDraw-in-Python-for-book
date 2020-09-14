@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import wx # type: ignore
+from typing import Tuple
 
 class Shape(ABC):
     """I define methods common to all the shapes that
@@ -35,3 +36,11 @@ class Shape(ABC):
     def GrowTo(self, x2: int, y2: int):
         self.__X2 = x2
         self.__Y2 = y2
+
+    def EnclosingRectangle(self) -> Tuple[int, int, int, int]:
+        x = min([self.__X1, self.__X2])
+        y = min([self.__Y1, self.__Y2])  
+        w = max([self.__X1, self.__X2]) - x
+        h = max([self.__Y1, self.__Y2]) - y
+
+        return (x, y, w, h)
