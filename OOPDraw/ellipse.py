@@ -14,4 +14,4 @@ class Ellipse(Shape):
         h = max([self.Y1(), self.Y2()]) - y
 
         dc.Pen = self.Pen()
-        dc.DrawEllipse(x, y, w, h)
+        dc.DrawEllipticArc(x, y, w, h, 0, 360)

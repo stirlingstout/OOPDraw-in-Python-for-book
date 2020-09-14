@@ -12,11 +12,12 @@ class Circle(Shape):
     def Draw(self, dc: wx.DC):
         x = min([self.X1(), self.X2()])
         y = min([self.Y1(), self.Y2()])
+
         w = max([self.X1(), self.X2()]) - x
         h = max([self.Y1(), self.Y2()]) - y
-        r = w // 2
+
         dc.Pen = self.Pen()
-        dc.DrawCircle(x + r, y + r, r)
+        dc.DrawEllipticArc(x, y, w, h, 0, 360)
 
     def GrowTo(self, x2: int, y2: int):
         diameter: int = max([x2 - self.X1(), y2 - self.Y1()])
