@@ -5,6 +5,7 @@ from typing import List, Callable, Optional
 from line import Line
 from rectangle import Rectangle
 from ellipse import Ellipse
+from circle import Circle
 
 
 class OOPDrawIntermediate(wx.Frame):
@@ -68,7 +69,7 @@ class OOPDrawIntermediate(wx.Frame):
         # User's code for user controls will go here
         AddChoice("LineWidth", "Line width:", ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
         AddChoice("Colour", "Colour:", ["Red", "Green", "Blue"], self.OnColourChanged)
-        AddChoice("Shape", "Shape:", ["Ellipse", "Line", "Rectangle"], None)
+        AddChoice("Shape", "Shape:", ["Ellipse", "Circle", "Line", "Rectangle"], None)
 
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
@@ -104,6 +105,8 @@ class OOPDraw(OOPDrawIntermediate):
             self.shapes.append(Rectangle(self.CurrentPen, e.x, e.y))
         elif self.FindWindow("Shape").Value == "Ellipse":
             self.shapes.append(Ellipse(self.CurrentPen, e.x, e.y))
+        elif self.FindWindow("Shape").Value == "Circle":
+            self.shapes.append(Circle(self.CurrentPen, e.x, e.y))
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
