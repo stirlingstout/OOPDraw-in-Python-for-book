@@ -1,4 +1,3 @@
-from typing import Optional
 import wx # type: ignore
 
 from shape import Shape
@@ -6,7 +5,7 @@ from shape import Shape
 class Circle(Shape):
     """I represent a circle in the OOPDraw system"""
 
-    def __init__(self, p: wx.Pen, x1: int, y1: int, x2: Optional[int]=None, y2: Optional[int]=None):
+    def __init__(self, p: wx.Pen, x1: int, y1: int, x2: int=None, y2: int=None):
         Shape.__init__(self, p, x1, y1, x2, y2)
         self.GrowTo(self.X2(), self.Y2())
 
