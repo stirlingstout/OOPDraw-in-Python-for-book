@@ -28,19 +28,24 @@ class Shape(ABC):
 
     def Y2(self):
         return self.__Y2
+
+    def SetX2(self, value: int):
+        self.__X2 = value
+
+    def SetY2(self, value: int):
+        self.__Y2 = value
       
     @abstractmethod
     def Draw(self, dc: wx.DC):
         pass
 
     def GrowTo(self, x2: int, y2: int):
-        self.__X2 = x2
-        self.__Y2 = y2
+        self.SetX2(x2)
+        self.SetY2(y2)
 
     def EnclosingRectangle(self) -> Tuple[int, int, int, int]:
         x = min([self.__X1, self.__X2])
         y = min([self.__Y1, self.__Y2])  
         w = max([self.__X1, self.__X2]) - x
         h = max([self.__Y1, self.__Y2]) - y
-
         return (x, y, w, h)
