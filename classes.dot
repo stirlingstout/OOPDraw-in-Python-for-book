@@ -1,14 +1,14 @@
 digraph "classes" {
 charset="utf-8"
 rankdir=BT
-"0" [label="{Line|__Pen\l__X1\l__X2\l__Y1\l__Y2\l|Draw(dc)\lGrowTo(x2, y2)\lPen()\lX1()\lX2()\lY1()\lY2()\l__init__(p, x1, y1, x2, y2)\l}", shape="record"];
-"1" [label="{Line|__Pen\l__X1\l__X2\l__Y1\l__Y2\l|Draw(dc)\lGrowTo(x2, y2)\lPen()\lX1()\lX2()\lY1()\lY2()\l__init__(p, x1, y1, x2, y2)\l}", shape="record"];
+"0" [label="{Line|__X2\l__Y2\l|Draw(dc)\lGrowTo(x2, y2)\l}", shape="record"];
+"1" [label="{Line|\l|Draw(dc)\lGrowTo(x2, y2)\l}", shape="record"];
 "2" [label="{OOPDraw|CurrentPen\ldragging : bool\llastMousePosition\lshapes : list\lstartOfDrag\l|OnColourChanged(e)\lOnLineWidthChanged(e)\lOnMouseDown(e)\lOnMouseMove(e)\lOnMouseUp(e)\lOnPaint(e)\l__init__()\l}", shape="record"];
 "3" [label="{OOPDrawIntermediate|Canvas\lCurrentBrush\lCurrentPen\lSize : tuple\lSizer\l|__init__()\l}", shape="record"];
 "4" [label="{Rectangle|__Pen\l__X1\l__X2\l__Y1\l__Y2\l|Draw(dc)\lGrowTo(x2, y2)\lPen()\lX1()\lX2()\lY1()\lY2()\l__init__(p, x1, y1, x2, y2)\l}", shape="record"];
-"5" [label="{Rectangle|__Pen\l__X1\l__X2\l__Y1\l__Y2\l|Draw(dc)\lGrowTo(x2, y2)\lPen()\lX1()\lX2()\lY1()\lY2()\l__init__(p, x1, y1, x2, y2)\l}", shape="record"];
-"6" [label="{Shape|\l|Draw(dc)\lGrowTo(x2, y2)\l}", shape="record"];
-"7" [label="{Shape|\l|Draw(dc)\lGrowTo(x2, y2)\l}", shape="record"];
+"5" [label="{Rectangle|\l|Draw(dc)\lGrowTo(x2, y2)\l}", shape="record"];
+"6" [label="{Shape|__Pen\l__X1\l__X2\l__Y1\l__Y2\l|Draw(dc)\lGrowTo(x2, y2)\lPen()\lX1()\lX2()\lY1()\lY2()\l__init__(p, x1, y1, x2, y2)\l}", shape="record"];
+"7" [label="{Shape|__Pen\l__X1\l__X2\l__Y1\l__Y2\l|Draw(dc)\lGrowTo(x2, y2)\lPen()\lSetX2(value)\lSetY2(value)\lX1()\lX2()\lY1()\lY2()\l__init__(p, x1, y1, x2, y2)\l}", shape="record"];
 "1" -> "7" [arrowhead="empty", arrowtail="none"];
 "2" -> "3" [arrowhead="empty", arrowtail="none"];
 "5" -> "7" [arrowhead="empty", arrowtail="none"];
