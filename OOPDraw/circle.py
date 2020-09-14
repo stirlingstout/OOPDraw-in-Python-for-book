@@ -1,6 +1,8 @@
 import wx # type: ignore
 
 from shape import Shape
+from drawing_functions import DrawClosedArc
+
 
 class Circle(Shape):
     """I represent a circle in the OOPDraw system"""
@@ -10,13 +12,10 @@ class Circle(Shape):
         self.GrowTo(self.X2(), self.Y2())
 
     def Draw(self, dc: wx.DC):
-        (x, y, w, h) = self.EnclosingRectangle()
-
-        dc.Pen = self.Pen()
-        dc.DrawEllipticArc(x, y, w, h, 0, 360)
+        DrawClosedArc(dc, self)
 
     def GrowTo(self, x2: int, y2: int):
-        diameter: int = max([x2 - self.X1(), y2 - self.Y1()])
+        diameter = max([x2 - self.X1(), y2 - self.Y1()])
         self._Shape__X2 = self.X1() + diameter
         self._Shape__Y2 = self.Y1() + diameter
 

@@ -10,7 +10,7 @@ class Rectangle(Shape):
     My size can be changed using my GrowTo method"""
 
     def Draw(self, dc: wx.DC):
-        (x, y, w, h) = self.EnclosingRectangle()
+        x, y, w, h = self.EnclosingRectangle()
 
         dc.SetPen(self.Pen())
         dc.DrawRectangle(x, y, w, h)

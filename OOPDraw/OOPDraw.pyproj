@@ -25,6 +25,9 @@
     <Compile Include="circle.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="drawing_functions.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ellipse.py">
       <SubType>Code</SubType>
     </Compile>
