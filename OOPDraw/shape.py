@@ -7,8 +7,9 @@ class Shape(ABC):
     will be used in OOPDraw. I can't be instantiated
     myself since I'm abstract"""
 
-    def __init__(self, p: wx.Pen, x1: int, y1: int, x2: int=None, y2: int=None):
-        self.__Pen = p
+    def __init__(self, p: wx.Pen, x1: int, y1: int,
+                 x2: int=None, y2: int=None):
+        self.__Pen = wx.Pen(p)
         
         self.__X1 = x1
         self.__Y1 = y1
