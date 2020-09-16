@@ -70,7 +70,7 @@ class OOPDrawIntermediate(wx.Frame):
         AddChoice("LineWidth", "Line width:", ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
         AddChoice("Colour", "Colour:", ["Red", "Green", "Blue"], self.OnColourChanged)
         AddChoice("Shape", "Shape:", ["Ellipse", "Circle", "Line", "Rectangle"], None)
-        AddChoice("Action", "Action:", ["Draw", "Move"], None)
+        AddChoice("Action", "Action:", ["Draw", "Move", "Select"], None)
 
 
 class OOPDraw(OOPDrawIntermediate):
@@ -89,6 +89,8 @@ class OOPDraw(OOPDrawIntermediate):
 
         self.shapes = []
 
+        self.selectionBox = None
+
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
@@ -97,6 +99,9 @@ class OOPDraw(OOPDrawIntermediate):
         dc.Pen = self.CurrentPen
         for shape in self.shapes:
             shape.Draw(dc)
+        
+        if self.selectionBox:
+            self.selectionBox.Draw(dc)
 
     def AddShape(self, e: wx.MouseEvent):
         if self.FindWindow("Shape").Value == "Line":
@@ -113,23 +118,31 @@ class OOPDraw(OOPDrawIntermediate):
         self.startOfDrag = self.lastMousePosition = e.GetPosition()
         if self.FindWindow("Action").Value == "Draw":
             self.AddShape(e)
+        elif self.FindWindow("Action").Value == "Select":
+            p = wx.Pen(wx.BLACK, 1)
+            self.selectionBox = Rectangle(p, self.startOfDrag.x,
+                                             self.startOfDrag.y)
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
         self.dragging = False
         self.lastMousePosition = wx.Point()
+        self.selectionBox = None
         self.Refresh()
 
     def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
         if self.dragging:
             shape = self.shapes[-1]
             if self.FindWindow("Action").Value == "Move":
-                if not self.lastMousePosition.IsFullySpecified():
+                if not self.lastMousePosition:
                     self.lastMousePosition = e.GetPosition()
                 shape.MoveBy(e.x - self.lastMousePosition.x, 
                              e.y - self.lastMousePosition.y)
             elif self.FindWindow("Action").Value == "Draw":
                 shape.GrowTo(e.x, e.y)
+            elif self.FindWindow("Action").Value == "Select":
+                self.selectionBox.GrowTo(e.x, e.y)
+                self.SelectShapes()
 
             self.lastMousePosition = e.GetPosition()
             self.Refresh()
@@ -157,6 +170,12 @@ class OOPDraw(OOPDrawIntermediate):
     def DeselectAll(self):
         for s in self.shapes:
             s.Deselect()
+
+    def SelectShapes(self):
+        self.DeselectAll()
+        for s in self.shapes:
+            if self.selectionBox.FullySurrounds(s):
+                s.Select()
 
 
 if __name__ == '__main__':
