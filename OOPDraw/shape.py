@@ -9,10 +9,13 @@ class Shape(ABC):
 
     def __init__(self, p: wx.Pen, x1: int, y1: int, x2: int=None, y2: int=None):
         self.__Pen = p
+        
         self.__X1 = x1
         self.__Y1 = y1
         self.__X2 = x2 if x2 else x1
         self.__Y2 = y2 if y2 else y1
+
+        self.Selected = False
 
     def Pen(self):
         return self.__Pen
@@ -55,3 +58,11 @@ class Shape(ABC):
         self.__Y1 += yDelta
         self.__X2 += xDelta
         self.__Y2 += yDelta
+
+    def Select(self):
+       self.Selected = True
+       self.__Pen.Style = wx.PENSTYLE_SHORT_DASH
+
+    def Deselect(self):
+        self.Selected = False
+        self.__Pen.Style = wx.PENSTYLE_SOLID
