@@ -99,8 +99,6 @@ class OOPDraw(OOPDrawIntermediate):
             shape.Draw(dc)
 
     def AddShape(self, e: wx.MouseEvent):
-        self.DeselectAll()
-
         if self.FindWindow("Shape").Value == "Line":
             self.shapes.append(Line(self.CurrentPen, e.x, e.y))
         elif self.FindWindow("Shape").Value == "Rectangle":
@@ -109,8 +107,6 @@ class OOPDraw(OOPDrawIntermediate):
             self.shapes.append(Ellipse(self.CurrentPen, e.x, e.y))
         elif self.FindWindow("Shape").Value == "Circle":
             self.shapes.append(Circle(self.CurrentPen, e.x, e.y))
-
-        self.shapes[-1].Select()
 
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
