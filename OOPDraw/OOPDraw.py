@@ -70,6 +70,8 @@ class OOPDrawIntermediate(wx.Frame):
         AddChoice("LineWidth", "Line width:", ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
         AddChoice("Colour", "Colour:", ["Red", "Green", "Blue"], self.OnColourChanged)
         AddChoice("Shape", "Shape:", ["Ellipse", "Circle", "Line", "Rectangle"], None)
+        AddChoice("Action", "Action:", ["Draw", "Move"], None)
+
 
 class OOPDraw(OOPDrawIntermediate):
     def __init__(self):
@@ -96,9 +98,7 @@ class OOPDraw(OOPDrawIntermediate):
         for shape in self.shapes:
             shape.Draw(dc)
 
-    def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
-        self.dragging = True
-        self.startOfDrag = self.lastMousePosition = e.GetPosition()
+    def AddShape(self, e: wx.MouseEvent):
         if self.FindWindow("Shape").Value == "Line":
             self.shapes.append(Line(self.CurrentPen, e.x, e.y))
         elif self.FindWindow("Shape").Value == "Rectangle":
@@ -107,15 +107,30 @@ class OOPDraw(OOPDrawIntermediate):
             self.shapes.append(Ellipse(self.CurrentPen, e.x, e.y))
         elif self.FindWindow("Shape").Value == "Circle":
             self.shapes.append(Circle(self.CurrentPen, e.x, e.y))
+
+    def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
+        self.dragging = True
+        self.startOfDrag = self.lastMousePosition = e.GetPosition()
+        if self.FindWindow("Action").Value == "Draw":
+            self.AddShape(e)
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
         self.dragging = False
+        self.lastMousePosition = wx.Point()
+        self.Refresh()
 
     def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
         if self.dragging:
-            currentLine = self.shapes[-1]
-            currentLine.GrowTo(e.x, e.y)
+            shape = self.shapes[-1]
+            if self.FindWindow("Action").Value == "Move":
+                if not self.lastMousePosition.IsFullySpecified():
+                    self.lastMousePosition = e.GetPosition()
+                shape.MoveBy(e.x - self.lastMousePosition.x, 
+                             e.y - self.lastMousePosition.y)
+            elif self.FindWindow("Action").Value == "Draw":
+                shape.GrowTo(e.x, e.y)
+
             self.lastMousePosition = e.GetPosition()
             self.Refresh()
 
